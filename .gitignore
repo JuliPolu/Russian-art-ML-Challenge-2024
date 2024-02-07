@@ -1,0 +1,25 @@
+.idea
+*.ipynb
+.ipynb_checkpoints
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+__pycache__
+
+# VSCode
+*.code-workspace
+.vscode/
+
+.DS_Store
+
+*.ckpt
+*.pt
+*.onnx
+*.pkl

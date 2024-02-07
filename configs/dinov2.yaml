@@ -1,0 +1,8 @@
+train_path: "./data/train/"
+test_path: "./data/test/"
+data_csv_path: "./data/private_info/train.csv"
+submission_path: "./data/submission.csv"
+device: "cuda:0"
+model_arch: "facebook/dinov2-base"
+result_model_path: "./svm_model.pkl"
+scaler_path: "scaler.pkl"
