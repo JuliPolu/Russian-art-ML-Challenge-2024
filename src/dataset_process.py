@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import numpy as np
 
+from typing import Tuple, List
+
 from sklearn.model_selection import train_test_split
 
 import torch
@@ -16,7 +18,10 @@ def load_image(img: str, transforms=None) -> torch.Tensor:
     return img
 
 
-def dataset_prepare_split(train_csv_path, train_data_path):
+def dataset_prepare_split(
+    train_csv_path: str, 
+    train_data_path: str
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
 
     df = pd.read_csv(train_csv_path, sep="\t")
     labels = np.array(df["label_id"].tolist())

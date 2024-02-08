@@ -1,6 +1,6 @@
 from transformers import AutoImageProcessor, AutoModel
 import torch
-
+from typing import Tuple, List, Union
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
@@ -13,14 +13,23 @@ import joblib
 from dataset_process import load_image
 
 
-def init_model(device, architect):
+def init_model(
+    device: torch.device, 
+    architect: str,
+    ) -> Tuple[AutoModel, AutoImageProcessor]:
     processor = AutoImageProcessor.from_pretrained(architect)
     model = AutoModel.from_pretrained(architect)
     model = model.to(device)
     return model, processor
 
 
-def calc_embeddings(model, x_train, processor, device):
+def calc_embeddings(
+    model: AutoModel,
+    x_train: List[str], 
+    processor: AutoImageProcessor, 
+    device: torch.device,
+    ) -> np.ndarray:
+
     train_embeddings = []
     with torch.no_grad():
         for data in tqdm(x_train):
@@ -34,7 +43,12 @@ def calc_embeddings(model, x_train, processor, device):
     return train_embeddings_final
 
 
-def train_and_save_classifier(X_train, y_train, model_path, scaler_path):
+def train_and_save_classifier(
+    X_train: np.ndarray, 
+    y_train: np.ndarray, 
+    model_path: str, 
+    scaler_path: str,
+    ) -> None:
     """
     Train the SVM classifier and save the model.
     """
@@ -46,7 +60,12 @@ def train_and_save_classifier(X_train, y_train, model_path, scaler_path):
     joblib.dump(scaler, scaler_path)
 
 
-def load_and_evaluate_classifier(model_path, scaler_path, X_test, y_test):
+def load_and_evaluate_classifier(
+    model_path: str, 
+    scaler_path: str,
+    X_test: np.ndarray, 
+    y_test: np.ndarray,
+    ) -> pd.DataFrame:
     """
     Load the SVM classifier and evaluate it on the test data.
     """
